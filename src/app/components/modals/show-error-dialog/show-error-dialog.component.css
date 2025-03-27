@@ -1,0 +1,14 @@
+.dialog-container {
+  padding: 10px;
+}
+.dialog-container mat-dialog-content {
+  padding: 0;
+}
+
+.dialog-container h2 {
+  font-weight: 500;
+}
+
+.dialog-container .btn-closed {
+  border-radius: 10px;
+}

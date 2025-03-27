@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { UtilsService } from '@utils/utils.service';
+// import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-login',
   imports: [
@@ -11,7 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+  ],
+  providers:[
+    UtilsService
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -19,7 +24,9 @@ import { MatIconModule } from '@angular/material/icon';
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
-  constructor() { }
+  constructor(
+    private utilsService: UtilsService
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -32,4 +39,13 @@ export class LoginComponent implements OnInit {
     })
   }
 
+
+  onLogin() {
+    if (this.form.invalid) {
+      this.utilsService.showError('Silakan lengkapi informasi yang diperlukan.');
+      this.form.markAllAsTouched();
+    } else {
+
+    }
+  }
 }
