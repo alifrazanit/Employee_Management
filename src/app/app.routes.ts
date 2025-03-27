@@ -11,5 +11,9 @@ export const routes: Routes = [
             },
         ]
     },
-    { path: '**', loadComponent: () => import('./pages/notfound/notfound.component').then(c => c.NotfoundComponent) }
+    {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent),  
+    },
+    { path: '**', loadComponent: () => import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent) }
 ];
