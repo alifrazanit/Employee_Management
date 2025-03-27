@@ -1,0 +1,100 @@
+.login-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f8f8;
+}
+
+.login-container .login-content {
+  padding: 75px 0;
+  display: flex;
+}
+
+.login-container mat-card {
+  width: 95%;
+  height: auto;
+  max-width: 40rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login-container mat-form-field {
+  --mat-sys-surface-variant: transparent;
+}
+
+.login-container .form-controller .btn-signin {
+  border-radius: 10px;
+}
+
+.login-container .signin-content,
+.login-container .image-container {
+  width: 50%;
+  height: auto;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.login-container .image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-container .image-container .image-content img {
+  width: 20rem;
+  height: 100%;
+}
+
+.login-container .image-container .image-content .info {
+  text-align: right;
+  font-size: 10px;
+}
+
+.login-container .signin-content {
+  gap: 1rem;
+  display: flex;
+  flex-flow: column;
+}
+
+.login-container .signin-content h1 {
+  font-weight: 400;
+}
+
+@media screen and (max-width: 670px) {
+  .login-container .login-content {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-container .signin-content {
+    width: 100%;
+    text-align: center;
+  }
+  .login-container mat-form-field {
+    width: 90%;
+  }
+  .login-container .image-container {
+    width: 100%;
+  }
+  .login-container .image-container .image-content img {
+    width: 90%;
+    height: 100%;
+  }
+  .login-container .image-container .image-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-container .image-design {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .login-container .login-content {
+    padding: 0;
+  }
+}
