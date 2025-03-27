@@ -1,0 +1,40 @@
+{
+    "employees": [
+      {
+        "username": "alif1",
+        "firstName": "Alif",
+        "lastName": "Saputra",
+        "password": "1234",
+        "email": "ailfrazanit@gmail.com",
+        "birthDate": "1997-10-09",
+        "basicSalary": 11000000,
+        "status": "AKTIF",
+        "group": "IT",
+        "description": "Test"
+      },
+      {
+        "username": "mila1",
+        "firstName": "Mila",
+        "lastName": "Indah",
+        "password": "1234",
+        "email": "milaindah@gmail.com",
+        "birthDate": "1998-11-10",
+        "basicSalary": 10000000,
+        "status": "AKTIF",
+        "group": "QA",
+        "description": "Lorem Ipsum"
+      },
+      {
+        "username": "budi1",
+        "firstName": "Budiman",
+        "lastName": "Prakoso",
+        "password": "1234",
+        "email": "budimanPrakoso@gmail.com",
+        "birthDate": "1993-11-05",
+        "basicSalary": 8000000,
+        "status": "AKTIF",
+        "group": "PM",
+        "description": "Lorem Ipsum"
+      }
+    ]
+  }

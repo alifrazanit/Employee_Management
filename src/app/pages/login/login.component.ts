@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { UtilsService } from '@utils/utils.service';
+import { AuthService } from '@services/auth/auth.service';
 // import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-login',
@@ -15,8 +16,9 @@ import { UtilsService } from '@utils/utils.service';
     MatInputModule,
     MatIconModule,
   ],
-  providers:[
-    UtilsService
+  providers: [
+    UtilsService,
+    AuthService
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +48,18 @@ export class LoginComponent implements OnInit {
       this.utilsService.showError('Silakan lengkapi informasi yang diperlukan.');
       this.form.markAllAsTouched();
     } else {
-
+      const formData = this.form.getRawValue();
+      const payload = {
+        username: formData['username'], 
+        password: formData['password'], 
+      }
+      this.authService.signIn(payload).subscribe(res => {
+        if(!res){
+          this.utilsService.showError('Username atau password tidak sesuai');
+        } else {
+          console.log('XX')
+        }
+      })
     }
   }
 }
