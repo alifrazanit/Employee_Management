@@ -1,0 +1,34 @@
+.side-nav .btn-closed {
+  border-radius: 0;
+}
+
+.side-nav .header-side-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-weight: 500;
+}
+
+.side-nav .header-side-nav h3 {
+  margin: 10px;
+}
+
+.side-nav .mat-mdc-list-item-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+.side-nav mat-list mat-list-item{
+  background-color: white;
+}
+
+.side-nav mat-list mat-list-item.selected {
+  background-color: #00a8ff;
+  color: white;
+}
+
+.side-nav mat-list mat-list-item:hover {
+  cursor: pointer;
+  background-color: #00a8ff;
+  color: white;
+}

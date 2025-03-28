@@ -1,0 +1,21 @@
+<div class="side-nav">
+    <div class="row">
+        <div class="col">
+            <div class="header-side-nav">
+                <h3>Employee Management</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-list>
+                @for (menu of listMenu; track menu.id) {
+                <mat-list-item [class.selected]="menu.selected">
+                    <mat-icon matListItemIcon>menu</mat-icon>
+                    <div matListItemTitle (click)="goTo(menu)">{{menu.menu}}</div>
+                </mat-list-item>
+                }
+            </mat-list>
+        </div>
+    </div>
+</div>

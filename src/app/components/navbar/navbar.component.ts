@@ -15,10 +15,14 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Output() onOpenSide = new EventEmitter()
-
+  @Output() onOpenSide = new EventEmitter();
+  @Output() onLogout = new EventEmitter();
 
   onOpenSidemenu() {
     this.onOpenSide.emit(true)
+  }
+
+  logout(){
+    this.onLogout.emit(true);
   }
 }

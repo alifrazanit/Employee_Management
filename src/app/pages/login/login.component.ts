@@ -6,6 +6,8 @@ import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { UtilsService } from '@utils/utils.service';
 import { AuthService } from '@services/auth/auth.service';
+import { Router } from '@angular/router';
+
 // import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-login',
@@ -28,7 +30,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private utilsService: UtilsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +60,7 @@ export class LoginComponent implements OnInit {
         if(!res){
           this.utilsService.showError('Username atau password tidak sesuai');
         } else {
-          console.log('XX')
+          this.router.navigate(['/'])
         }
       })
     }

@@ -1,10 +1,9 @@
 <mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="onOpenSidemenu()">
+    <button mat-icon-button class="icon" aria-label="Example icon-button with menu icon" (click)="onOpenSidemenu()">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>Employee Management</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+    <span class="spacer"></span>
+    <button mat-icon-button class="icon" aria-label="Example icon-button with share icon"
         [matMenuTriggerFor]="menu">
         <mat-icon>person</mat-icon>
     </button>
@@ -13,7 +12,7 @@
             <mat-icon>settings</mat-icon>
             Settings
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
             Logout
         </button>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CommonHttpService } from '@services/common-http/common-http.service';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import { map } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 interface signIn {
   username: string;
@@ -11,10 +13,37 @@ interface signIn {
   providedIn: 'root'
 })
 export class AuthService {
+  private preffixKey = 'EM';
+  private authKey = 'AUTH'
+  private key = `${this.preffixKey}${this.authKey}`;
 
   constructor(
-    private commonHttp: CommonHttpService
+    private commonHttp: CommonHttpService,
+    private localStorage: LocalStorageService
   ) { }
+
+  setKey(value: any){
+    return this.localStorage.setItem(this.key, value);
+  }
+
+  getKey(){
+    return this.localStorage.getItem(this.key);
+  }
+
+  checkAuthByUsername(username: string){
+    return this.commonHttp.get().pipe(
+      map((res) => {
+        const employeesData: any = res;
+        const employee = employeesData.employees;
+        const dataExist = employee.filter((e: any) => e.username === username);
+        if(dataExist.length != 0){
+          return true;
+        } else {
+          return false;
+        }
+      })
+    )
+  }
 
   signIn(params: signIn) {
     return this.commonHttp.get().pipe(
@@ -25,7 +54,8 @@ export class AuthService {
           const dataExist = employee.filter((e: any) => e.username === params.username);
           if(dataExist.length != 0){
             if (dataExist[0].password === params.password) {
-              return dataExist
+              this.setKey(dataExist[0].username);
+              return dataExist[0]
             } else {
               return null;
             }
