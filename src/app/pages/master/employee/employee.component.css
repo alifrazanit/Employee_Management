@@ -1,0 +1,13 @@
+mat-card mat-card-content .form-control {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  width: 300px;
+}
+mat-card mat-card-content {
+    padding-top: 1rem;
+}
+
+.btn-find{
+    border-radius: 10px;  
+}

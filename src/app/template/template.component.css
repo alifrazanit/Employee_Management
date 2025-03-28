@@ -6,3 +6,7 @@ mat-drawer-container{
 mat-drawer-container mat-drawer{
     border-radius: 0;
 }
+
+mat-drawer-container .main-content{
+    padding: 1rem;
+}
