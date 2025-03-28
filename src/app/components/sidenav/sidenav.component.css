@@ -32,3 +32,7 @@
   background-color: #00a8ff;
   color: white;
 }
+
+.side-nav .row,.side-nav  .col{
+  width: 100%;
+}

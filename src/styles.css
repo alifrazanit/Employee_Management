@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-primary {
+  color: white !important;
+  background-color: #00a8ff !important;
+}
+
+.btn-success {
+  color: white !important;
+  background-color: #4cd137 !important;
+}
+
+.btn {
+  border-radius: 10px !important;
+}
+
+.row {
+  display: flex !important;
+}
+
+.gap-1 {
+  gap: 10px;
+}

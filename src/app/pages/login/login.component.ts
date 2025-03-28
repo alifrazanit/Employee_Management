@@ -7,8 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { UtilsService } from '@utils/utils.service';
 import { AuthService } from '@services/auth/auth.service';
 import { Router } from '@angular/router';
+import { Label } from '@config/label';
 
-// import { MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-login',
   imports: [
@@ -27,6 +28,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
+  label = Label;
 
   constructor(
     private utilsService: UtilsService,
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.form.invalid) {
-      this.utilsService.showError('Silakan lengkapi informasi yang diperlukan.');
+      this.utilsService.showError(this.label.ERROR_MESSAGE.INVALID_INPUT);
       this.form.markAllAsTouched();
     } else {
       const formData = this.form.getRawValue();
@@ -58,7 +60,7 @@ export class LoginComponent implements OnInit {
       }
       this.authService.signIn(payload).subscribe(res => {
         if(!res){
-          this.utilsService.showError('Username atau password tidak sesuai');
+          this.utilsService.showError(this.label.ERROR_MESSAGE.USERNAME_OR_PASSWORD_NOT_VALID);
         } else {
           this.router.navigate(['/'])
         }

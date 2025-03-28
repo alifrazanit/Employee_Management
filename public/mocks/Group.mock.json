@@ -1,0 +1,39 @@
+{
+  "group": [
+    {
+      "id": 1,
+      "value": "IT",
+      "label": "IT"
+    },
+    {
+      "id": 2,
+      "value": "Accounting",
+      "label": "Accounting"
+    },
+    {
+      "id": 3,
+      "value": "HR",
+      "label": "HR"
+    },
+    {
+      "id": 4,
+      "value": "Admin",
+      "label": "Admin"
+    },
+    {
+      "id": 5,
+      "value": "PM",
+      "label": "PM"
+    },
+    {
+      "id": 6,
+      "value": "CEO",
+      "label": "CEO"
+    },
+    {
+      "id": 7,
+      "value": "CTO",
+      "label": "CTO"
+    }
+  ]
+}

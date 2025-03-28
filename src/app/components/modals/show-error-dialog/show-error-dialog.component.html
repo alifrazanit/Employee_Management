@@ -1,9 +1,9 @@
 <div class="dialog-container">
-    <h2 mat-dialog-title>System Information</h2>
+    <h2 mat-dialog-title>{{label.LABEL.SYSTEM_INFORMATION}}</h2>
     <mat-dialog-content>
         {{data.message}}
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="close()" class="btn-closed">Ok</button>
+        <button mat-button (click)="close()" class="btn-closed">{{label.BUTTONS.OK}}</button>
     </mat-dialog-actions>
 </div>

@@ -6,14 +6,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CommonHttpService {
-  private mockUrl = 'mocks/Employee.mock.json';
+ 
   constructor(
     private http: HttpClient
   ) { }
 
 
-  get() {
-    return this.http.get(this.mockUrl);
+  get(url: string) {
+    return this.http.get(url);
   }
 
 }

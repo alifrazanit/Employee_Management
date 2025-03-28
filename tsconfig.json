@@ -28,6 +28,7 @@
       "@utils/*":["src/app/utils/*"],
       "@env/*":["src/environments/*"],
       "@guards/*":["src/app/guards/*"],
+      "@config/*":["src/app/config/*"],
     },
   },
   "angularCompilerOptions": {

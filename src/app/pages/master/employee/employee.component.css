@@ -8,6 +8,20 @@ mat-card mat-card-content {
     padding-top: 1rem;
 }
 
-.btn-find{
-    border-radius: 10px;  
+mat-card mat-card-content .form-control .required{
+  color: red;
+}
+
+mdc-button.btn-primary {
+  color: white;
+  background-color: #00a8ff;
+}
+
+mdc-button.btn-success {
+  color: white;
+  background-color: #4cd137;
+}
+
+mdc-button.btn {
+  border-radius: 10px;
 }

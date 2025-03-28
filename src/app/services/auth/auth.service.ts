@@ -16,6 +16,7 @@ export class AuthService {
   private preffixKey = 'EM';
   private authKey = 'AUTH'
   private key = `${this.preffixKey}${this.authKey}`;
+  private URL = 'mocks/Employee.mock.json';
 
   constructor(
     private commonHttp: CommonHttpService,
@@ -31,7 +32,7 @@ export class AuthService {
   }
 
   checkAuthByUsername(username: string){
-    return this.commonHttp.get().pipe(
+    return this.commonHttp.get(this.URL).pipe(
       map((res) => {
         const employeesData: any = res;
         const employee = employeesData.employees;
@@ -46,10 +47,10 @@ export class AuthService {
   }
 
   signIn(params: signIn) {
-    return this.commonHttp.get().pipe(
+    return this.commonHttp.get(this.URL).pipe(
       map((res) => {
         const employeesData: any = res;
-        const employee = employeesData.employees;
+        const employee = employeesData.employess;
         if (params.username) {
           const dataExist = employee.filter((e: any) => e.username === params.username);
           if(dataExist.length != 0){

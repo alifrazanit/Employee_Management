@@ -1,0 +1,14 @@
+{
+  "status": [
+    {
+      "id": 1,
+      "value": "ACTIVE",
+      "label": "Active"
+    },
+    {
+      "id": 2,
+      "value": "NOT_ACTIVE",
+      "label": "Not Active"
+    }
+  ]
+}

@@ -33,7 +33,6 @@
 .login-container .image-container {
   width: 50%;
   height: auto;
-  overflow: hidden;
   padding: 20px;
 }
 
@@ -48,7 +47,7 @@
 }
 
 .login-container .image-container .image-content .info {
-  text-align: right;
+  text-align: center;
   font-size: 10px;
 }
 

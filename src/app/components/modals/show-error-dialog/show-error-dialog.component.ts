@@ -6,6 +6,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
+import { Label } from '@config/label';
 @Component({
   selector: 'app-show-error-dialog',
   imports: [
@@ -17,6 +18,7 @@ import {
   styleUrl: './show-error-dialog.component.css'
 })
 export class ShowErrorDialogComponent {
+  label = Label;
   constructor(
     private dialogRef: MatDialogRef<ShowErrorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

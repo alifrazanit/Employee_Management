@@ -5,6 +5,7 @@ import { sideMenu } from '@mocks/sideMenu.mock';
 import { MatListModule } from '@angular/material/list';
 import { MatTreeModule } from '@angular/material/tree';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Label } from '@config/label';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,6 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent implements OnInit {
+  label = Label;
   private menu = sideMenu;
   listMenu: any[] = [];
 
