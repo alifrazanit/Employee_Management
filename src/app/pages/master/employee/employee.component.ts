@@ -38,7 +38,7 @@ import { PaginatorComponent } from '@components/paginator/paginator.component';
 export class EmployeeComponent implements OnInit {
   label = Label;
   form!: FormGroup;
-  dataSource: MatTableDataSource<any[]>;
+  dataSource: MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
   displayedColumns: string[] = [
     'action',
     'id',
@@ -52,18 +52,16 @@ export class EmployeeComponent implements OnInit {
   listDDLGroup: any[] = [];
   dataTable: any[] = [];
 
-  configPagination = {
-    pageIndex: 1, // currentPage
-    dataLength: 0, // totalData
-    pageSize: 10, // perPage
-  }
+  // configPagination = {
+  //   pageIndex: 1, // currentPage
+  //   dataLength: 0, // totalData
+  //   pageSize: 10, // perPage
+  // }
 
   constructor(
     private employeeService: EmployeeService,
     private utils: UtilsService
-  ) { 
-    this.dataSource = new MatTableDataSource([]);
-  }
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -107,7 +105,10 @@ export class EmployeeComponent implements OnInit {
     return this.employeeService.fetchData(params).subscribe(results => {
       if (results && results.length !== 0) {
         this.dataTable = results;
-        //
+        // this.configPagination = {
+        //   ...this.configPagination,
+        //   dataLength: this.dataTable.length
+        // }
       }
     })
   }
@@ -127,10 +128,16 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  onDataReady(tableReady: any){
-    if(tableReady){
-      console.log('tableReady', tableReady)
+  onDataReady(tableReady: any) {
+    if (tableReady && tableReady.length != 0) {
       this.dataSource = new MatTableDataSource(tableReady);
     }
   }
+
+  // onPageEvent(event: any) {
+  //   this.configPagination = {
+  //     ...this.configPagination,
+  //     pageIndex: event.pageIndex
+  //   };
+  // }
 }
