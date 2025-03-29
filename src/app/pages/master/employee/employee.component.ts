@@ -7,13 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { Employee } from '@interfaces/Employee.interface';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { FormatCurrencyPipe } from 'src/app/pipes/format-currency/format-currency.pipe';
 import { EmployeeService } from '@services/employee/employee.service';
 import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
 import { CurrencyPipe } from '@angular/common';
+import { PaginatorComponent } from '@components/paginator/paginator.component';
 
 @Component({
   selector: 'app-employee',
@@ -26,7 +25,7 @@ import { CurrencyPipe } from '@angular/common';
     MatSelectModule,
     MatTableModule,
     FormatCurrencyPipe,
-    MatPaginatorModule,
+    PaginatorComponent
   ],
   providers: [
     EmployeeService,
@@ -36,10 +35,10 @@ import { CurrencyPipe } from '@angular/common';
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
-export class EmployeeComponent implements OnInit, AfterViewInit {
+export class EmployeeComponent implements OnInit {
   label = Label;
   form!: FormGroup;
-  dataSource!: MatTableDataSource<Employee[]>;
+  dataSource: MatTableDataSource<any[]>;
   displayedColumns: string[] = [
     'action',
     'id',
@@ -51,14 +50,19 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   ];
   listDDLStatus: any[] = [];
   listDDLGroup: any[] = [];
+  dataTable: any[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  configPagination = {
+    pageIndex: 1, // currentPage
+    dataLength: 0, // totalData
+    pageSize: 10, // perPage
+  }
 
   constructor(
     private employeeService: EmployeeService,
     private utils: UtilsService
   ) { 
-    this.paginator = new MatPaginator();
+    this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit(): void {
@@ -66,10 +70,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     this.fetchDDLStatus();
     this.fetchDDLGroup();
     this.fetchAllData();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
   initForm() {
@@ -106,7 +106,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     const params = {}
     return this.employeeService.fetchData(params).subscribe(results => {
       if (results && results.length !== 0) {
-        this.dataSource = new MatTableDataSource(results);
+        this.dataTable = results;
+        //
       }
     })
   }
@@ -122,8 +123,14 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
         group: formData.group,
       }
       this.employeeService.fetchData(params).subscribe(results => {
-        console.log('resutls', results)
       })
+    }
+  }
+
+  onDataReady(tableReady: any){
+    if(tableReady){
+      console.log('tableReady', tableReady)
+      this.dataSource = new MatTableDataSource(tableReady);
     }
   }
 }
