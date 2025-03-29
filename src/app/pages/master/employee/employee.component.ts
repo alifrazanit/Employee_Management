@@ -7,12 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { Employee } from '@interfaces/Employee.interface';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { FormatCurrencyPipe } from 'src/app/pipes/format-currency/format-currency.pipe';
 import { EmployeeService } from '@services/employee/employee.service';
 import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
+import { CurrencyPipe } from '@angular/common';
+
 @Component({
   selector: 'app-employee',
   imports: [
@@ -28,7 +30,8 @@ import { Label } from '@config/label';
   ],
   providers: [
     EmployeeService,
-    UtilsService
+    UtilsService,
+    CurrencyPipe
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
@@ -49,26 +52,31 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   listDDLStatus: any[] = [];
   listDDLGroup: any[] = [];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private employeeService: EmployeeService,
     private utils: UtilsService
-  ) { }
+  ) { 
+    this.paginator = new MatPaginator();
+  }
 
   ngOnInit(): void {
     this.initForm();
     this.fetchDDLStatus();
     this.fetchDDLGroup();
+    this.fetchAllData();
   }
 
-  ngAfterViewInit(): void {
-    // this.dataSource.sort = this.sort;
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   initForm() {
     this.form = new FormGroup({
       name: new FormControl(null, [Validators.required]),
-      status: new FormControl(null),
-      group: new FormControl(null),
+      status: new FormControl(null, [Validators.required]),
+      group: new FormControl(null, [Validators.required]),
     })
   }
 
@@ -94,11 +102,28 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     })
   }
 
+  fetchAllData() {
+    const params = {}
+    return this.employeeService.fetchData(params).subscribe(results => {
+      if (results && results.length !== 0) {
+        this.dataSource = new MatTableDataSource(results);
+      }
+    })
+  }
+
   onFind() {
     if (this.form.invalid) {
       this.utils.showError(this.label.ERROR_MESSAGE.INVALID_INPUT);
     } else {
-
-    } 
+      const formData = this.form.getRawValue();
+      const params = {
+        name: formData.name,
+        status: formData.status,
+        group: formData.group,
+      }
+      this.employeeService.fetchData(params).subscribe(results => {
+        console.log('resutls', results)
+      })
+    }
   }
 }

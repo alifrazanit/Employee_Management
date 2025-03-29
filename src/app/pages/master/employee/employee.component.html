@@ -20,7 +20,7 @@
                 <div class="col">
                     <div class="form-container">
                         <div class="form-control">
-                            <mat-label>Group</mat-label>
+                            <mat-label>Group<span class="required">*</span></mat-label>
                             <mat-form-field appearance="outline">
                                 <mat-select formControlName="group">
                                     @for(group of listDDLGroup; track group.id){
@@ -36,7 +36,7 @@
                 <div class="col">
                     <div class="form-container">
                         <div class="form-control">
-                            <mat-label>Aktif</mat-label>
+                            <mat-label>Aktif<span class="required">*</span></mat-label>
                             <mat-form-field appearance="outline">
                                 <mat-select formControlName="status">
                                     @for(status of listDDLStatus; track status.id){
