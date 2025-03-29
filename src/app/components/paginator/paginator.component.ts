@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { LoadingService } from '@services/loading/loading.service';
 
 
 export interface configPaginationi {
@@ -17,13 +18,14 @@ export interface configPaginationi {
   styleUrl: './paginator.component.css'
 })
 export class PaginatorComponent implements OnChanges {
+  loadingService = inject(LoadingService);
+  
   @Input() dataTable: any[] = [];
   configPagination = {
     pageIndex: 0, // currentPage
     dataLength: 0, // totalData
     pageSize: 10, // perPage
   };
-
 
   @Output() onDataReady = new EventEmitter();
   @Output() onPageEvent = new EventEmitter();
@@ -36,11 +38,13 @@ export class PaginatorComponent implements OnChanges {
   }
 
   setUpPagination() {
+    this.loadingService.setLoading(true);
     const startIndex = this.configPagination.pageIndex * this.configPagination.pageSize;
     const endIndex = startIndex + this.configPagination.pageSize;
     this.configPagination.dataLength = this.dataTable.length;
     const hasil = this.dataTable.slice(startIndex, endIndex);
     this.onDataReady.emit(hasil)
+    this.loadingService.setLoading(false);
   }
 
   handlePageEvent(event: any) {

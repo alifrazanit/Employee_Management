@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { inject, Component, OnInit, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { Employee } from '@interfaces/Employee.interface';
+import { MatSortModule } from '@angular/material/sort';
 import { FormatCurrencyPipe } from 'src/app/pipes/format-currency/format-currency.pipe';
 import { EmployeeService } from '@services/employee/employee.service';
 import { UtilsService } from '@utils/utils.service';
@@ -25,7 +25,8 @@ import { PaginatorComponent } from '@components/paginator/paginator.component';
     MatSelectModule,
     MatTableModule,
     FormatCurrencyPipe,
-    PaginatorComponent
+    PaginatorComponent,
+    MatSortModule
   ],
   providers: [
     EmployeeService,
@@ -52,15 +53,9 @@ export class EmployeeComponent implements OnInit {
   listDDLGroup: any[] = [];
   dataTable: any[] = [];
 
-  // configPagination = {
-  //   pageIndex: 1, // currentPage
-  //   dataLength: 0, // totalData
-  //   pageSize: 10, // perPage
-  // }
-
   constructor(
     private employeeService: EmployeeService,
-    private utils: UtilsService
+    private utils: UtilsService,
   ) { }
 
   ngOnInit(): void {
@@ -105,10 +100,6 @@ export class EmployeeComponent implements OnInit {
     return this.employeeService.fetchData(params).subscribe(results => {
       if (results && results.length !== 0) {
         this.dataTable = results;
-        // this.configPagination = {
-        //   ...this.configPagination,
-        //   dataLength: this.dataTable.length
-        // }
       }
     })
   }
@@ -134,10 +125,15 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  // onPageEvent(event: any) {
-  //   this.configPagination = {
-  //     ...this.configPagination,
-  //     pageIndex: event.pageIndex
-  //   };
-  // }
+  matSortChange(event: any) {
+    const colomn = event.active;
+    const sort = event.direction;
+
+    const sortedData = this.dataTable.sort((a, b) => typeof a[colomn] === 'string' ? a[colomn].localeCompare(b[colomn]) : a[colomn] - b[colomn]);
+    if (sort === 'desc') {
+      sortedData.reverse();
+    }
+
+    this.dataTable = [...sortedData];
+  }
 }
