@@ -13,6 +13,7 @@ import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
 import { CurrencyPipe } from '@angular/common';
 import { PaginatorComponent } from '@components/paginator/paginator.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee',
@@ -26,7 +27,8 @@ import { PaginatorComponent } from '@components/paginator/paginator.component';
     MatTableModule,
     FormatCurrencyPipe,
     PaginatorComponent,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule
   ],
   providers: [
     EmployeeService,
@@ -47,7 +49,8 @@ export class EmployeeComponent implements OnInit {
     'email',
     'birthDate',
     'basicSalary',
-    'status'
+    'status',
+    'group'
   ];
   listDDLStatus: any[] = [];
   listDDLGroup: any[] = [];
@@ -115,6 +118,9 @@ export class EmployeeComponent implements OnInit {
         group: formData.group,
       }
       this.employeeService.fetchData(params).subscribe(results => {
+        if (results) {
+          this.dataSource = new MatTableDataSource(results);
+        }
       })
     }
   }
@@ -130,10 +136,19 @@ export class EmployeeComponent implements OnInit {
     const sort = event.direction;
 
     const sortedData = this.dataTable.sort((a, b) => typeof a[colomn] === 'string' ? a[colomn].localeCompare(b[colomn]) : a[colomn] - b[colomn]);
+    console.log('sortedData', sortedData)
     if (sort === 'desc') {
       sortedData.reverse();
     }
 
     this.dataTable = [...sortedData];
+  }
+
+  onEdit(row: any) {
+    this.utils.showInfo(`Edit Produk ID: ${row.id}`, 'Oke', 'edit-snackbar');
+  }
+
+  onDelete(row: any) {
+    this.utils.showInfo(`Delete Produk ID: ${row.id}`, 'Oke', 'delete-snackbar');
   }
 }

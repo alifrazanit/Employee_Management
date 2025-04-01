@@ -30,3 +30,15 @@ body {
 .gap-1 {
   gap: 10px;
 }
+
+.edit-snackbar {
+  --mat-sys-inverse-surface: #f1c40f;
+  --mat-sys-inverse-on-surface: #222f3e;
+  --mat-sys-inverse-primary: #222f3e;
+}
+
+.delete-snackbar {
+  --mat-sys-inverse-surface: #eb2f06;
+  --mat-sys-inverse-on-surface: #ffffff;
+  --mat-sys-inverse-primary: #ffffff;
+}

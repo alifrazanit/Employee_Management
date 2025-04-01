@@ -5,10 +5,10 @@ mat-card mat-card-content .form-control {
   width: 300px;
 }
 mat-card mat-card-content {
-    padding-top: 1rem;
+  padding-top: 1rem;
 }
 
-mat-card mat-card-content .form-control .required{
+mat-card mat-card-content .form-control .required {
   color: red;
 }
 
@@ -24,4 +24,24 @@ mdc-button.btn-success {
 
 mdc-button.btn {
   border-radius: 10px;
+}
+
+table .btn-edit {
+  background-color: #f1c40f;
+}
+table .action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+table .btn-delete {
+  background-color: #eb2f06;
+}
+table th {
+  text-align: center;
+}
+
+table th .mat-sort-header-container {
+  justify-content: center;
 }
