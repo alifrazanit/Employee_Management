@@ -9,6 +9,7 @@ export interface Employee {
     status: statusEmployee;
     group: string;
     description: string;
+    id:any;
 }
 
 export enum statusEmployee {

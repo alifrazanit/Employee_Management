@@ -14,6 +14,8 @@ import { Label } from '@config/label';
 import { CurrencyPipe } from '@angular/common';
 import { PaginatorComponent } from '@components/paginator/paginator.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoadingService } from '@services/loading/loading.service';
+import { Employee } from '@interfaces/Employee.interface';
 
 @Component({
   selector: 'app-employee',
@@ -41,7 +43,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 export class EmployeeComponent implements OnInit {
   label = Label;
   form!: FormGroup;
-  dataSource: MatTableDataSource<any[]> = new MatTableDataSource<any[]>([]);
+  dataSource: MatTableDataSource<Employee[]> = new MatTableDataSource<Employee[]>([]);
   displayedColumns: string[] = [
     'action',
     'id',
@@ -59,13 +61,32 @@ export class EmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private utils: UtilsService,
+    private loading: LoadingService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
-    this.fetchDDLStatus();
+    this.employeeService.getDDLGroup.subscribe(res => {
+      if (res && res.length !== 0) {
+        this.listDDLGroup = res;
+      }
+    });
+    this.employeeService.getDDLStatus.subscribe(res => {
+      if (res && res.length !== 0) {
+        this.listDDLStatus = res;
+      }
+    });
+    this.employeeService.getEmployee.subscribe(res => {
+      this.dataTable = res;
+    })
+
     this.fetchDDLGroup();
-    this.fetchAllData();
+    this.fetchDDLStatus();
+    this.fetchMockData();
+  }
+
+  fetchMockData() {
+    this.employeeService.fetchMockData();
   }
 
   initForm() {
@@ -77,34 +98,17 @@ export class EmployeeComponent implements OnInit {
   }
 
   fetchDDLStatus() {
+    this.loading.setLoading(true)
     this.employeeService.fetchDDLStatus().subscribe(res => {
-      if (res) {
-        const results: any = res;
-        if (results?.status && results?.status.length != 0) {
-          this.listDDLStatus = results.status;
-        }
-      }
+      this.loading.setLoading(false)
     })
   }
 
   fetchDDLGroup() {
-    this.employeeService.fetchDDLGroup().subscribe(res => {
-      if (res) {
-        const results: any = res;
-        if (results?.group && results?.group.length != 0) {
-          this.listDDLGroup = results.group;
-        }
-      }
-    })
-  }
-
-  fetchAllData() {
-    const params = {}
-    return this.employeeService.fetchData(params).subscribe(results => {
-      if (results && results.length !== 0) {
-        this.dataTable = results;
-      }
-    })
+    this.loading.setLoading(true)
+    this.employeeService.fetchDDLGroup().subscribe(result => {
+      this.loading.setLoading(false)
+    });
   }
 
   onFind() {
@@ -117,11 +121,7 @@ export class EmployeeComponent implements OnInit {
         status: formData.status,
         group: formData.group,
       }
-      this.employeeService.fetchData(params).subscribe(results => {
-        if (results) {
-          this.dataSource = new MatTableDataSource(results);
-        }
-      })
+      this.dataTable = this.employeeService.fetchData(params);
     }
   }
 
@@ -134,13 +134,10 @@ export class EmployeeComponent implements OnInit {
   matSortChange(event: any) {
     const colomn = event.active;
     const sort = event.direction;
-
     const sortedData = this.dataTable.sort((a, b) => typeof a[colomn] === 'string' ? a[colomn].localeCompare(b[colomn]) : a[colomn] - b[colomn]);
-    console.log('sortedData', sortedData)
     if (sort === 'desc') {
       sortedData.reverse();
     }
-
     this.dataTable = [...sortedData];
   }
 
@@ -149,6 +146,12 @@ export class EmployeeComponent implements OnInit {
   }
 
   onDelete(row: any) {
-    this.utils.showInfo(`Delete Produk ID: ${row.id}`, 'Oke', 'delete-snackbar');
+    // this.employeeService.deleteData()
+    const exist = this.employeeService.deleteData(row.id)
+    if(exist){
+      this.utils.showInfo(`Delete Produk ID: ${row.id}`, 'Oke', 'delete-snackbar');
+    } else {
+      console.log('xx')
+    }
   }
 }

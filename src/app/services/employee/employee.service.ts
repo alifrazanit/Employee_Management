@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Employee } from '@interfaces/Employee.interface';
+import { Group } from '@interfaces/group.interface';
+import { Status } from '@interfaces/Status.interface';
 import { CommonHttpService } from '@services/common-http/common-http.service';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,35 +13,99 @@ export class EmployeeService {
   private DDLGROUPURL = 'mocks/Group.mock.json';
   private DDLSTATUSURL = 'mocks/Status.mock.json';
 
+  private ddlGroup = new BehaviorSubject<Group[]>([]);
+  private ddlStatus = new BehaviorSubject<Status[]>([]);
+  private dataEmployee = new BehaviorSubject<Employee[]>([]);
+
+
+  get getDDLGroup() {
+    return this.ddlGroup.asObservable();
+  }
+
+  get getDDLStatus() {
+    return this.ddlStatus.asObservable();
+  }
+
+  get getEmployee() {
+    return this.dataEmployee.asObservable();
+  }
+
+
+  setEmployee(dataEmployee: Employee[]) {
+    this.dataEmployee.next(dataEmployee);
+  }
+
+  setDDLGroup(group: Group[]) {
+    this.ddlGroup.next(group)
+  }
+
+  setDDLStatus(status: Status[]) {
+    this.ddlStatus.next(status)
+  }
+
+
   constructor(
     private commonHttp: CommonHttpService
   ) { }
 
   fetchDDLGroup() {
-    return this.commonHttp.get(this.DDLGROUPURL);
+    return this.commonHttp.get(this.DDLGROUPURL).pipe(
+      tap(dataGroup => {
+        if (dataGroup) {
+          const results: any = dataGroup;
+          if (results?.group && results?.group.length != 0) {
+            this.setDDLGroup(results.group);
+          }
+        }
+      })
+    )
   }
 
   fetchDDLStatus() {
-    return this.commonHttp.get(this.DDLSTATUSURL);
+    return this.commonHttp.get(this.DDLSTATUSURL).pipe(
+      tap(dataStatus => {
+        if (dataStatus) {
+          const results: any = dataStatus;
+          if (results?.status && results?.status.length != 0) {
+            this.setDDLStatus(results.status);
+          }
+        }
+      })
+    )
   }
 
-  fetchData(params: any) {
-    return this.commonHttp.get(this.URL).pipe(map(results => {
-      const data: any = results;
-      if (data.employess && data.employess.length != 0) {
-        const formattedData = data.employess.map((d: any) => ({
+  fetchMockData() {
+    return this.commonHttp.get(this.URL).subscribe(res => {
+      const results: any = res;
+      if (results && results.employess) {
+        const formattedData = results.employess.map((d: any) => ({
           ...d,
           name: `${d.firstName} ${d.lastName}`
         }));
-        if (params.name && params.group && params.status) {
-          const user = formattedData.filter((fd: any) => fd.group === params['group'] && fd.status === params['status'] && String(fd.name).toLowerCase().includes(String(params['name']).toLowerCase()));
-          return user;
-        } else {
-          return formattedData;
-        }
-      } else {
-        return [];
+        this.setEmployee(formattedData);
       }
-    }))
+    });
+  }
+
+  fetchData(params: any) {
+    const dataEmployee = this.dataEmployee.getValue();
+    if (params.name && params.group && params.status) {
+      const user = dataEmployee.filter((fd: any) => fd.group === params['group'] && fd.status === params['status'] && String(fd.name).toLowerCase().includes(String(params['name']).toLowerCase()));
+      return user;
+    } else {
+      return dataEmployee
+    }
+  }
+
+  deleteData(id: any){
+    const dataEmployee = this.dataEmployee.getValue();
+    const ExistData = dataEmployee.find(de => de.id === id);
+    if(ExistData){
+      const data = dataEmployee.filter(de => de.id !== id);
+      this.setEmployee(data);
+      return true;
+    } else {
+      return false;
+    }
   }
 }
