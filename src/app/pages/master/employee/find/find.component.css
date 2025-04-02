@@ -1,0 +1,48 @@
+mat-card mat-card-content .form-control {
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+    width: 300px;
+  }
+  mat-card mat-card-content {
+    padding-top: 1rem;
+  }
+  
+  mat-card mat-card-content .form-control .required {
+    color: red;
+  }
+  
+  mdc-button.btn-primary {
+    color: white;
+    background-color: #00a8ff;
+  }
+  
+  mdc-button.btn-success {
+    color: white;
+    background-color: #4cd137;
+  }
+  
+  mdc-button.btn {
+    border-radius: 10px;
+  }
+  
+  table .btn-edit {
+    background-color: #f1c40f;
+  }
+  table .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  table .btn-delete {
+    background-color: #eb2f06;
+  }
+  table th {
+    text-align: center;
+  }
+  
+  table th .mat-sort-header-container {
+    justify-content: center;
+  }
+  

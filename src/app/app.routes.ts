@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@guards/auth.guard';
-import { EmployeeComponent } from '@pages/master/employee/employee.component';
-
+import { EmployeeRoutes } from '@pages/master/employee/employee.routes';
 
 export const routes: Routes = [
     {
@@ -14,8 +13,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
             },
             {
-                path: 'employee',
-                loadComponent: () => import('./pages/master/employee/employee.component').then(c => c.EmployeeComponent),
+                path: 'master',
+                loadComponent: () => import('./pages/master/master.component').then(c => c.MasterComponent),
+                children: [
+                    {
+                        path: 'employee',
+                        children: EmployeeRoutes
+                    }
+                ]
             }
         ]
     },
