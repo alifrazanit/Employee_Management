@@ -1,3 +1,7 @@
+mat-card {
+  border: 1px solid #b2bec3;
+  border-radius: 10px;
+}
 mat-card mat-card-content .form-control {
     display: flex;
     flex-flow: column;

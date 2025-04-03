@@ -13,7 +13,7 @@ export const EmployeeRoutes: Routes = [
                 component: FindComponent
             },
             {
-                path: 'new',
+                path: 'form-employee',
                 component: FormEmployeeComponent
             },
             {

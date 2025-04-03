@@ -93,7 +93,7 @@ export class EmployeeService {
       const user = dataEmployee.filter((fd: any) => fd.group === params['group'] && fd.status === params['status'] && String(fd.name).toLowerCase().includes(String(params['name']).toLowerCase()));
       return user;
     } else {
-      return dataEmployee
+      return []
     }
   }
 

@@ -128,9 +128,7 @@ export class FindComponent implements OnInit {
   }
 
   onDataReady(tableReady: any) {
-    if (tableReady && tableReady.length != 0) {
-      this.dataSource = new MatTableDataSource(tableReady);
-    }
+    this.dataSource = new MatTableDataSource(tableReady);
   }
 
   matSortChange(event: any) {
@@ -145,18 +143,17 @@ export class FindComponent implements OnInit {
 
   onEdit(row: any) {
     this.utils.showInfo(`Edit Produk ID: ${row.id}`, 'Oke', 'edit-snackbar');
+    this.router.navigate(['/master', 'employee', 'form-employee'])
   }
 
   onDelete(row: any) {
     const exist = this.employeeService.deleteData(row.id)
     if (exist) {
       this.utils.showInfo(`Delete Produk ID: ${row.id}`, 'Oke', 'delete-snackbar');
-    } else {
-      console.log('xx')
     }
   }
 
   onAddEmployee() {
-    this.router.navigate(['employee', 'add-employee'])
+    this.router.navigate(['master', 'employee', 'form-employee'])
   }
 }

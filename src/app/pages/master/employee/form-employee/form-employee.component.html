@@ -1,1 +1,168 @@
-<p>form-employee works!</p>
+<div class="container">
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Form Employee</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="form">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>First Name<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="firstName">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Last Name<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="lastName">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Birth Date<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate"/>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Email<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="email" type="email">
+                                    @if (form.get('email')?.hasError('required')) {
+                                    <mat-error>Email is required</mat-error>
+                                    } @else if (form.get('email')?.hasError('email')) {
+                                    <mat-error>Please enter a valid email address</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Username<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="username">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Basic Salary<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input type="number" matInput formControlName="basicSalary">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Status<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="status">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Group<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="group">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-container">
+                            <div class="form-control">
+                                <mat-label>Description<span class="required">*</span></mat-label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="description">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </form>
+            
+            <!-- <form [formGroup]="form">
+                <!-- <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-container">
+                                    <div class="form-control">
+                                        <mat-label>First Name<span class="required">*</span></mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput formControlName="firstName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-container">
+                                    <div class="form-control">
+                                        <mat-label>Last Name<span class="required">*</span></mat-label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput formControlName="lastName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            
+                <!--
+             
+         
+               
+               
+              
+               
+            </form> -->
+        </mat-card-content>
+    </mat-card>
+</div>

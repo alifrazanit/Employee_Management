@@ -1,21 +1,13 @@
 <div class="side-nav">
-    <div class="row">
-        <div class="col">
-            <div class="header-side-nav">
-                <h3>{{label.LABEL.EMPLOYEE_MANAGEMENT}}</h3>
-            </div>
-        </div>
+    <div class="header-side-nav">
+        <h4>{{label.LABEL.EMPLOYEE_MANAGEMENT}}</h4>
     </div>
-    <div class="row">
-        <div class="col">
-            <mat-list>
-                @for (menu of listMenu; track menu.id) {
-                <mat-list-item [class.selected]="menu.selected">
-                    <mat-icon matListItemIcon>menu</mat-icon>
-                    <div matListItemTitle (click)="goTo(menu)">{{menu.menu}}</div>
-                </mat-list-item>
-                }
-            </mat-list>
-        </div>
-    </div>
+    <mat-list>
+        @for (menu of listMenu; track menu.id) {
+        <mat-list-item [class.selected]="menu.selected">
+            <mat-icon matListItemIcon>menu</mat-icon>
+            <div matListItemTitle (click)="goTo(menu)">{{menu.menu}}</div>
+        </mat-list-item>
+        }
+    </mat-list>
 </div>

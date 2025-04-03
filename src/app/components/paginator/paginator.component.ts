@@ -39,11 +39,16 @@ export class PaginatorComponent implements OnChanges {
 
   setUpPagination() {
     this.loadingService.setLoading(true);
-    const startIndex = this.configPagination.pageIndex * this.configPagination.pageSize;
-    const endIndex = startIndex + this.configPagination.pageSize;
-    this.configPagination.dataLength = this.dataTable.length;
-    const hasil = this.dataTable.slice(startIndex, endIndex);
-    this.onDataReady.emit(hasil)
+    if(this.dataTable.length != 0){
+      const startIndex = this.configPagination.pageIndex * this.configPagination.pageSize;
+      const endIndex = startIndex + this.configPagination.pageSize;
+      this.configPagination.dataLength = this.dataTable.length;
+      const hasil = this.dataTable.slice(startIndex, endIndex);
+      this.onDataReady.emit(hasil)
+    } else {
+      this.onDataReady.emit([])
+    }
+  
     this.loadingService.setLoading(false);
   }
 
