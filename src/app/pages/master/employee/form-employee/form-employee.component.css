@@ -37,3 +37,7 @@ mdc-button.btn {
   background-color: white;
 }
 
+.gap-1 {
+  display: flex;
+  gap: 10px;
+}

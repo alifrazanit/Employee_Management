@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Employee } from '@interfaces/Employee.interface';
-import { Group } from '@interfaces/group.interface';
+import { Group } from '@interfaces/Group.interface';
 import { Status } from '@interfaces/Status.interface';
 import { CommonHttpService } from '@services/common-http/common-http.service';
+import { LocalStorageService } from '@services/local-storage/local-storage.service';
 import { BehaviorSubject, map, tap } from 'rxjs';
 
 @Injectable({
@@ -45,7 +46,8 @@ export class EmployeeService {
 
 
   constructor(
-    private commonHttp: CommonHttpService
+    private commonHttp: CommonHttpService,
+    private localStorage: LocalStorageService
   ) { }
 
   fetchDDLGroup() {
@@ -97,15 +99,23 @@ export class EmployeeService {
     }
   }
 
-  deleteData(id: any){
+  deleteData(id: any) {
     const dataEmployee = this.dataEmployee.getValue();
     const ExistData = dataEmployee.find(de => de.id === id);
-    if(ExistData){
+    if (ExistData) {
       const data = dataEmployee.filter(de => de.id !== id);
       this.setEmployee(data);
       return true;
     } else {
       return false;
     }
+  }
+
+  save(data: Employee) {
+    const dataEmployee = this.dataEmployee.getValue();
+    const newData = [...dataEmployee, data];
+    console.log('newData', newData)
+    this.setEmployee(newData);
+    // this.dataEmployee.next([...dataEmployee, data]);
   }
 }

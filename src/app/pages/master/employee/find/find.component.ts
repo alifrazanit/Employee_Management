@@ -80,6 +80,7 @@ export class FindComponent implements OnInit {
     });
     this.employeeService.getEmployee.subscribe(res => {
       this.dataTable = res;
+      console.log("UPDATE", res)
     })
 
     this.fetchDDLGroup();

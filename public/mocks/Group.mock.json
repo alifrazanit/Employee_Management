@@ -34,6 +34,21 @@
       "id": 7,
       "value": "CTO",
       "label": "CTO"
+    },
+    {
+      "id": 8,
+      "value": "GA",
+      "label": "GA"
+    },
+    {
+      "id": 9,
+      "value": "QA",
+      "label": "QA"
+    },
+    {
+      "id": 10,
+      "value": "IT Support",
+      "label": "IT Support"
     }
   ]
 }

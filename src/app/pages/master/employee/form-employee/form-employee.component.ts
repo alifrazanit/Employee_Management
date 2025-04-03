@@ -11,6 +11,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { EmployeeService } from '@services/employee/employee.service';
 import { LoadingService } from '@services/loading/loading.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { Router } from '@angular/router';
+import { UtilsService } from '@utils/utils.service';
+import { Label } from '@config/label';
+import { Employee } from '@interfaces/Employee.interface';
 @Component({
   selector: 'app-form-employee',
   imports: [
@@ -29,13 +33,16 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
   providers: [
     provideNativeDateAdapter(),
     LoadingService,
-    EmployeeService
+    EmployeeService,
+    UtilsService
   ],
   templateUrl: './form-employee.component.html',
   styleUrl: './form-employee.component.css'
 })
 export class FormEmployeeComponent implements OnInit {
   form!: FormGroup;
+  label = Label;
+
   listDDLGroup: any[] = [];
   defListDDLGroup: any[] = [];
   readonly maxDate = new Date();
@@ -43,7 +50,9 @@ export class FormEmployeeComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private router: Router,
+    private utils: UtilsService
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +63,9 @@ export class FormEmployeeComponent implements OnInit {
         this.defListDDLGroup = res;
       }
     });
-
+    this.employeeService.getEmployee.subscribe(res => {
+      console.log('DATA EMPLOYEE', res)
+    })
     this.fetchDDLGroup();
   }
 
@@ -67,9 +78,10 @@ export class FormEmployeeComponent implements OnInit {
       username: new FormControl(null, [Validators.required]),
       basicSalary: new FormControl(null, [Validators.required]),
       status: new FormControl(null, [Validators.required]),
-      groupTxt: new FormControl(null, [Validators.required]),
+      groupTxt: new FormControl(null),
       group: new FormControl(null, [Validators.required]),
       description: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
     });
     this.form.get('groupTxt')?.valueChanges.subscribe(res => {
       this.filterGroup();
@@ -102,5 +114,32 @@ export class FormEmployeeComponent implements OnInit {
 
   toggleAll(event: any) {
     console.log('Toggle All Clicked:', event);
+  }
+
+  onCancel() {
+    this.router.navigate(['/master', 'employee', 'find'])
+  }
+  onSave() {
+    if (this.form.invalid) {
+      this.utils.showError(this.label.ERROR_MESSAGE.INVALID_INPUT);
+    } else {
+      const dataForm = this.form.getRawValue();
+
+      const bodyParams:Employee= {
+        id: Math.random(),
+        firstName: dataForm.firstName, 
+        lastName: dataForm.lastName, 
+        birthDate: dataForm.birthDate, 
+        email: dataForm.email, 
+        username: dataForm.username, 
+        basicSalary: dataForm.basicSalary, 
+        status: dataForm.status, 
+        group: dataForm.group, 
+        description: dataForm.description, 
+        password: dataForm.password, 
+      }
+      this.employeeService.save(bodyParams);
+      // this.router.navigate(['/master', 'employee', 'find'])
+    }
   }
 }
