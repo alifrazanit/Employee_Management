@@ -118,4 +118,12 @@ export class EmployeeService {
     this.setEmployee(newData);
     // this.dataEmployee.next([...dataEmployee, data]);
   }
+
+  setLocalEmployeeData(employee: any){
+    this.localStorage.setItem('LIST_EMPLOYEE', employee);
+  }
+
+  getLocalEmployeeData(){
+    return this.localStorage.getItem('LIST_EMPLOYEE');
+  }
 }

@@ -9,7 +9,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [
             {
-                path: '',
+                path: 'dashboard',
                 loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent)
             },
             {
@@ -17,10 +17,20 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/master/master.component').then(c => c.MasterComponent),
                 children: [
                     {
+                        path: '',
+                        redirectTo: '/master/employee',
+                        pathMatch: 'full'
+                    },
+                    {
                         path: 'employee',
                         children: EmployeeRoutes
                     }
                 ]
+            },
+            {
+                path: '',
+                redirectTo: '/dashboard',
+                pathMatch: 'full'
             }
         ]
     },
