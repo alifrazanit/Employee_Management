@@ -145,7 +145,10 @@ export class FindComponent implements OnInit {
 
   onEdit(row: any) {
     this.utils.showInfo(`Edit Produk ID: ${row.id}`, 'Oke', 'edit-snackbar');
-    this.router.navigate(['/master', 'employee', 'form-employee'])
+    const params = {
+      id: row.id
+    };
+    this.router.navigate(['master', 'employee', 'form-employee'], { queryParams: params })
   }
 
   onDelete(row: any) {

@@ -115,9 +115,9 @@ export class EmployeeService {
   save(data: Employee) {
     const existingData = this.getLocalEmployeeData();
     const newData = data;
-    
+
     const duplicateUsername = existingData.find((ex: any) => ex.username === data.username);
-    if(duplicateUsername){
+    if (duplicateUsername) {
       return false;
     } else {
       const combineArr = existingData.concat(newData);
@@ -127,20 +127,30 @@ export class EmployeeService {
     }
   }
 
-  setLocalEmployeeData(employee: any){
+  setLocalEmployeeData(employee: any) {
     this.localStorage.setItem('LIST_EMPLOYEE', employee);
   }
 
-  getLocalEmployeeData(){
+  getLocalEmployeeData() {
     return this.localStorage.getItem('LIST_EMPLOYEE');
   }
 
-  fetchLocalDataEmployee(){
+  fetchLocalDataEmployee() {
     const dataExist = this.localStorage.getItem('LIST_EMPLOYEE');
-    if(!dataExist){
+    if (!dataExist) {
       this.fetchMockData();
     } else {
       this.setEmployee(dataExist);
+    }
+  }
+
+  fetchLocalDataEmployeeById(id: any) {
+    const listEmployee: any[] = this.localStorage.getItem('LIST_EMPLOYEE');
+    const dataExist = listEmployee.find((le: any) => String(le.id) === String(id));
+    if(dataExist){
+      return dataExist;
+    } else {
+      return null;
     }
   }
 }

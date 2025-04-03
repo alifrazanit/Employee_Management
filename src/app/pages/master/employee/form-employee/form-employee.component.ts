@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,7 +11,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { EmployeeService } from '@services/employee/employee.service';
 import { LoadingService } from '@services/loading/loading.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
 import { Employee } from '@interfaces/Employee.interface';
@@ -36,7 +36,7 @@ import { DatePipe } from '@angular/common';
     LoadingService,
     EmployeeService,
     UtilsService,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './form-employee.component.html',
   styleUrl: './form-employee.component.css'
@@ -51,13 +51,16 @@ export class FormEmployeeComponent implements OnInit {
   groupTxt: string = '';
   listDDLStatus: any[] = [];
 
+  id: string | null = null;
   constructor(
     private employeeService: EmployeeService,
     private loading: LoadingService,
     private router: Router,
-    private utils: UtilsService
-  ) { }
-
+    private utils: UtilsService,
+    private route: ActivatedRoute
+  ) {
+  
+  }
   ngOnInit(): void {
     this.initForm();
     this.employeeService.getDDLGroup.subscribe(res => {
@@ -73,6 +76,12 @@ export class FormEmployeeComponent implements OnInit {
     });
     this.fetchDDLStatus();
     this.fetchDDLGroup();
+
+    this.id = this.route.snapshot.queryParamMap.get('id');
+    if(this.id){
+      const user = this.findUser(this.id);
+      this.mappingForm(user);
+    }
   }
 
   initForm() {
@@ -101,6 +110,20 @@ export class FormEmployeeComponent implements OnInit {
     })
   }
 
+  mappingForm(data: any) {
+    this.form.patchValue({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      birthDate: new Date(data.birthDate),
+      email: data.email,
+      username: data.username,
+      basicSalary: data.basicSalary,
+      description: data.description,
+      password: data.password,
+      status: data.status,
+      group: data.group,
+    })
+  }
 
   filterGroup() {
     const val = this.form.get('groupTxt')?.value;
@@ -121,9 +144,14 @@ export class FormEmployeeComponent implements OnInit {
     });
   }
 
-  filterMyOptions(value: any) {
-    console.log('VALE', value)
-    // this.selectedStates = this.search(value);
+  findUser(id: any) {
+    const user = this.employeeService.fetchLocalDataEmployeeById(id);
+    if (!user) {
+      this.router.navigate(['master', 'employee', 'find']);
+      return null;
+    } else {
+      return user;
+    }
   }
 
   toggleAll(event: any) {
@@ -131,7 +159,7 @@ export class FormEmployeeComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/master', 'employee', 'find'])
+    this.router.navigate(['master', 'employee', 'find'])
   }
   onSave() {
     if (this.form.invalid) {
@@ -142,7 +170,6 @@ export class FormEmployeeComponent implements OnInit {
 
       const datePipe = new DatePipe('en-US');
       const formattedDate = datePipe.transform(new Date(dataForm.birthDate), 'yyyy-MM-dd');
-      console.log('dataForm.status', dataForm.status)
       const bodyParams: Employee = {
         id: Math.random(),
         name: `${dataForm.firstName} ${dataForm.lastName}`,

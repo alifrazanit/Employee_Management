@@ -16,11 +16,6 @@ export const EmployeeRoutes: Routes = [
                 path: 'form-employee',
                 component: FormEmployeeComponent
             },
-            {
-                path: '',
-                redirectTo: '/master/employee/find',
-                pathMatch: 'full'
-            }
         ]
     }
 ];
