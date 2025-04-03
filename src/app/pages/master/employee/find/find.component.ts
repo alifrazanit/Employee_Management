@@ -80,16 +80,17 @@ export class FindComponent implements OnInit {
     });
     this.employeeService.getEmployee.subscribe(res => {
       this.dataTable = res;
-      console.log("UPDATE", res)
     })
 
     this.fetchDDLGroup();
     this.fetchDDLStatus();
-    this.fetchMockData();
+    this.fetchLocalDataEmployee();
   }
 
-  fetchMockData() {
-    this.employeeService.fetchMockData();
+
+
+  fetchLocalDataEmployee() {
+    this.employeeService.fetchLocalDataEmployee();
   }
 
   initForm() {

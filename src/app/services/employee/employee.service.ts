@@ -84,6 +84,7 @@ export class EmployeeService {
           ...d,
           name: `${d.firstName} ${d.lastName}`
         }));
+        this.setLocalEmployeeData(formattedData);
         this.setEmployee(formattedData);
       }
     });
@@ -125,5 +126,14 @@ export class EmployeeService {
 
   getLocalEmployeeData(){
     return this.localStorage.getItem('LIST_EMPLOYEE');
+  }
+
+  fetchLocalDataEmployee(){
+    const dataExist = this.localStorage.getItem('LIST_EMPLOYEE');
+    if(!dataExist){
+      this.fetchMockData();
+    } else {
+      this.setEmployee(dataExist);
+    }
   }
 }

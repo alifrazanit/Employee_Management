@@ -55,7 +55,11 @@ export class AuthService {
         const localEmployee = this.employeeService.getLocalEmployeeData();
         if (params.username) {
           if (!localEmployee) {
-            this.employeeService.setLocalEmployeeData(employee);
+            const formattedData = employee.map((d: any) => ({
+              ...d,
+              name: `${d.firstName} ${d.lastName}`
+            }));
+            this.employeeService.setLocalEmployeeData(formattedData);
             const dataExist = employee.find((e: any) => e.username === params.username);
             if (dataExist) {
               if (dataExist.password === params.password) {
