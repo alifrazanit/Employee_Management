@@ -107,7 +107,7 @@
                             <div class="form-control">
                                 <mat-label>Basic Salary<span class="required">*</span></mat-label>
                                 <mat-form-field appearance="outline">
-                                    <input type="number" matInput formControlName="basicSalary">
+                                    <input matInput formControlName="basicSalary">
                                     @if (form.get('basicSalary')?.hasError('required')) {
                                     <mat-error>Basic Salary is required</mat-error>
                                     }

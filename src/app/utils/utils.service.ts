@@ -6,6 +6,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ import {
 export class UtilsService {
   private dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
-  constructor() { }
+  constructor(
+    private currency: CurrencyPipe
+  ) { }
 
   showError(msg: any) {
     return this.dialog.open(ShowErrorDialogComponent, {
@@ -28,5 +31,14 @@ export class UtilsService {
       verticalPosition: 'top',
       panelClass: className ? className : 'edit-snackbar'
     });
+  }
+
+  formatCurrenyIDR(value: any) {
+    let val = String(value).replace(/[^0-9]/g, '');
+    if (val) {
+      return this.currency.transform(String(val).replace(/\D/g, '').replace(/^0+/, ''), 'Rp. ', 'symbol', '1.0-0');
+    } else {
+      return 0;
+    }
   }
 }

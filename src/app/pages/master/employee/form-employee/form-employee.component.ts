@@ -15,7 +15,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
 import { Employee } from '@interfaces/Employee.interface';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 @Component({
   selector: 'app-form-employee',
   imports: [
@@ -37,6 +37,7 @@ import { DatePipe } from '@angular/common';
     EmployeeService,
     UtilsService,
     DatePipe,
+    CurrencyPipe
   ],
   templateUrl: './form-employee.component.html',
   styleUrl: './form-employee.component.css'
@@ -59,7 +60,7 @@ export class FormEmployeeComponent implements OnInit {
     private utils: UtilsService,
     private route: ActivatedRoute
   ) {
-  
+
   }
   ngOnInit(): void {
     this.initForm();
@@ -78,7 +79,7 @@ export class FormEmployeeComponent implements OnInit {
     this.fetchDDLGroup();
 
     this.id = this.route.snapshot.queryParamMap.get('id');
-    if(this.id){
+    if (this.id) {
       const user = this.findUser(this.id);
       this.mappingForm(user);
     }
@@ -100,6 +101,14 @@ export class FormEmployeeComponent implements OnInit {
     });
     this.form.get('groupTxt')?.valueChanges.subscribe(res => {
       this.filterGroup();
+    });
+    this.form.get('basicSalary')?.valueChanges.subscribe(value => {
+      if (value) {
+        console.log('value', value)
+        this.form.patchValue({
+          basicSalary: this.utils.formatCurrenyIDR(value)
+        }, { emitEvent: false })
+      }
     });
   }
 
