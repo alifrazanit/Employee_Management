@@ -32,3 +32,8 @@ mdc-button.btn-success {
 mdc-button.btn {
   border-radius: 10px;
 }
+
+.mat-mdc-option[aria-disabled=true].contains-mat-select-search{
+  background-color: white;
+}
+

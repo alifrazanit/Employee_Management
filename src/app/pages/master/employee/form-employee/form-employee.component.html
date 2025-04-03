@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     </div>
-                  
+
                 </div>
                 <div class="row">
                     <div class="col">
@@ -36,7 +36,8 @@
                             <div class="form-control">
                                 <mat-label>Birth Date<span class="required">*</span></mat-label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate"/>
+                                    <input matInput [max]="maxDate" [matDatepicker]="picker"
+                                        formControlName="birthDate" />
                                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -103,7 +104,14 @@
                             <div class="form-control">
                                 <mat-label>Group<span class="required">*</span></mat-label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput formControlName="group">
+                                    <mat-select formControlName="group"  #singleSelect>
+                                        <mat-option>
+                                            <ngx-mat-select-search (toggleAll)="toggleAll($event)" formControlName="groupTxt" placeholderLabel="Find bank..." ></ngx-mat-select-search>
+                                        </mat-option>
+                                        @for(group of listDDLGroup; track group.id){
+                                        <mat-option [value]="group.value">{{group.label}}</mat-option>
+                                        }
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -120,9 +128,9 @@
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </form>
-            
+
             <!-- <form [formGroup]="form">
                 <!-- <div class="row">
                     <div class="col">
@@ -154,8 +162,8 @@
                         </div>
                     </div>
                 </div> -->
-            
-                <!--
+
+            <!--
              
          
                
