@@ -37,6 +37,12 @@ body {
   --mat-sys-inverse-primary: #222f3e;
 }
 
+.success-snackbar {
+  --mat-sys-inverse-surface: #4cd137;
+  --mat-sys-inverse-on-surface: #ffffff;
+  --mat-sys-inverse-primary: #ffffff;
+}
+
 .delete-snackbar {
   --mat-sys-inverse-surface: #eb2f06;
   --mat-sys-inverse-on-surface: #ffffff;

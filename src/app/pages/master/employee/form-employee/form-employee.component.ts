@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { UtilsService } from '@utils/utils.service';
 import { Label } from '@config/label';
 import { Employee } from '@interfaces/Employee.interface';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-form-employee',
   imports: [
@@ -34,7 +35,8 @@ import { Employee } from '@interfaces/Employee.interface';
     provideNativeDateAdapter(),
     LoadingService,
     EmployeeService,
-    UtilsService
+    UtilsService,
+    DatePipe
   ],
   templateUrl: './form-employee.component.html',
   styleUrl: './form-employee.component.css'
@@ -47,6 +49,7 @@ export class FormEmployeeComponent implements OnInit {
   defListDDLGroup: any[] = [];
   readonly maxDate = new Date();
   groupTxt: string = '';
+  listDDLStatus: any[] = [];
 
   constructor(
     private employeeService: EmployeeService,
@@ -63,9 +66,12 @@ export class FormEmployeeComponent implements OnInit {
         this.defListDDLGroup = res;
       }
     });
-    this.employeeService.getEmployee.subscribe(res => {
-      console.log('DATA EMPLOYEE', res)
-    })
+    this.employeeService.getDDLStatus.subscribe(res => {
+      if (res && res.length !== 0) {
+        this.listDDLStatus = res;
+      }
+    });
+    this.fetchDDLStatus();
     this.fetchDDLGroup();
   }
 
@@ -87,6 +93,14 @@ export class FormEmployeeComponent implements OnInit {
       this.filterGroup();
     });
   }
+
+  fetchDDLStatus() {
+    this.loading.setLoading(true)
+    this.employeeService.fetchDDLStatus().subscribe(res => {
+      this.loading.setLoading(false)
+    })
+  }
+
 
   filterGroup() {
     const val = this.form.get('groupTxt')?.value;
@@ -122,24 +136,36 @@ export class FormEmployeeComponent implements OnInit {
   onSave() {
     if (this.form.invalid) {
       this.utils.showError(this.label.ERROR_MESSAGE.INVALID_INPUT);
+      this.form.markAllAsTouched();
     } else {
       const dataForm = this.form.getRawValue();
 
-      const bodyParams:Employee= {
+      const datePipe = new DatePipe('en-US');
+      const formattedDate = datePipe.transform(new Date(dataForm.birthDate), 'yyyy-MM-dd');
+      console.log('dataForm.status', dataForm.status)
+      const bodyParams: Employee = {
         id: Math.random(),
-        firstName: dataForm.firstName, 
-        lastName: dataForm.lastName, 
-        birthDate: dataForm.birthDate, 
-        email: dataForm.email, 
-        username: dataForm.username, 
-        basicSalary: dataForm.basicSalary, 
-        status: dataForm.status, 
-        group: dataForm.group, 
-        description: dataForm.description, 
-        password: dataForm.password, 
+        name: `${dataForm.firstName} ${dataForm.lastName}`,
+        firstName: dataForm.firstName,
+        lastName: dataForm.lastName,
+        birthDate: formattedDate,
+        email: dataForm.email,
+        username: dataForm.username,
+        basicSalary: dataForm.basicSalary,
+        status: dataForm.status,
+        group: dataForm.group,
+        description: dataForm.description,
+        password: dataForm.password,
       }
-      this.employeeService.save(bodyParams);
-      // this.router.navigate(['/master', 'employee', 'find'])
+
+      const res = this.employeeService.save(bodyParams);
+      if (!res) {
+        this.utils.showInfo(`Gagal Melakukan Save: ${dataForm.email}`, 'Oke', 'delete-snackbar')
+        this.router.navigate(['master', 'employee', 'find'])
+      } else {
+        this.utils.showInfo(`Berhasil Melakukan Save: ${dataForm.email}`, 'Oke', 'success-snackbar')
+        this.router.navigate(['master', 'employee', 'find'])
+      }
     }
   }
 }

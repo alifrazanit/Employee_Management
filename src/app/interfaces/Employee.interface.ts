@@ -4,12 +4,13 @@ export interface Employee {
     lastName: string;
     email: string;
     password: string;
-    birthDate: Date;
+    birthDate: any;
     basicSalary: Number;
     status: statusEmployee;
     group: string;
     description: string;
     id:any;
+    name?: any;
 }
 
 export enum statusEmployee {

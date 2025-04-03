@@ -122,7 +122,11 @@
                             <div class="form-control">
                                 <mat-label>Status<span class="required">*</span></mat-label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput formControlName="status">
+                                    <mat-select formControlName="status">
+                                        @for(status of listDDLStatus; track status.id){
+                                        <mat-option [value]="status.value">{{status.label}}</mat-option>
+                                        }
+                                    </mat-select>
                                     @if (form.get('status')?.hasError('required')) {
                                     <mat-error>Status is required</mat-error>
                                     }

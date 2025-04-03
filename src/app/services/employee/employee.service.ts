@@ -113,11 +113,18 @@ export class EmployeeService {
   }
 
   save(data: Employee) {
-    const dataEmployee = this.dataEmployee.getValue();
-    const newData = [...dataEmployee, data];
-    console.log('newData', newData)
-    this.setEmployee(newData);
-    // this.dataEmployee.next([...dataEmployee, data]);
+    const existingData = this.getLocalEmployeeData();
+    const newData = data;
+    
+    const duplicateUsername = existingData.find((ex: any) => ex.username === data.username);
+    if(duplicateUsername){
+      return false;
+    } else {
+      const combineArr = existingData.concat(newData);
+      this.setLocalEmployeeData(combineArr);
+      this.setEmployee(combineArr);
+      return true;
+    }
   }
 
   setLocalEmployeeData(employee: any){
