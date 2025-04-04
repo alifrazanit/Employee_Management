@@ -160,9 +160,6 @@ export class FormEmployeeComponent implements OnInit {
     }
   }
 
-  toggleAll(event: any) {
-    console.log('Toggle All Clicked:', event);
-  }
 
   onCancel() {
     this.router.navigate(['master', 'employee', 'find'])

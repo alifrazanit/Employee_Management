@@ -140,7 +140,4 @@ export class DetailEmployeeComponent implements OnInit {
     }
   }
 
-  toggleAll(event: any) {
-    console.log('Toggle All Clicked:', event);
-  }
 }

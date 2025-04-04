@@ -168,12 +168,9 @@ export class FindComponent implements OnInit {
   }
 
   onView(row: any) {
-    console.log('ROW', row)
     const dialogRef = this.dialog.open(DetailEmployeeComponent, {
       data: row
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe(result => { });
   }
 }
