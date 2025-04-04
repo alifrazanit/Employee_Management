@@ -22,9 +22,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
     MatCardModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatInputModule,
     MatFormFieldModule,
-    MatDatepickerModule,
     MatInputModule,
     MatDatepickerModule,
     MatGridListModule,
@@ -104,7 +102,6 @@ export class FormEmployeeComponent implements OnInit {
     });
     this.form.get('basicSalary')?.valueChanges.subscribe(value => {
       if (value) {
-        console.log('value', value)
         this.form.patchValue({
           basicSalary: this.utils.formatCurrenyIDR(value)
         }, { emitEvent: false })

@@ -1,0 +1,167 @@
+<h2 mat-dialog-title>Detail Employee</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>First Name<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="firstName">
+                            @if (form.get('firstName')?.hasError('required')) {
+                            <mat-error>First Name is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Last Name<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="lastName">
+                            @if (form.get('lastName')?.hasError('required')) {
+                            <mat-error>Last Name is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Birth Date<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput [max]="maxDate" [matDatepicker]="picker"
+                                formControlName="birthDate" />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            @if (form.get('birthDate')?.hasError('required')) {
+                            <mat-error>Birth Date is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Email<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="email" type="email">
+                            @if (form.get('email')?.hasError('required')) {
+                            <mat-error>Email is required</mat-error>
+                            } @else if (form.get('email')?.hasError('email')) {
+                            <mat-error>Please enter a valid email address</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Username<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="username">
+                            @if (form.get('username')?.hasError('required')) {
+                            <mat-error>Username is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Password<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input type="password" matInput formControlName="password">
+                            @if (form.get('password')?.hasError('required')) {
+                            <mat-error>Password is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Basic Salary<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <input matInput formControlName="basicSalary">
+                            @if (form.get('basicSalary')?.hasError('required')) {
+                            <mat-error>Basic Salary is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Status<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="status">
+                                @for(status of listDDLStatus; track status.id){
+                                <mat-option [value]="status.value">{{status.label}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (form.get('status')?.hasError('required')) {
+                            <mat-error>Status is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Group<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="group" #singleSelect>
+                                <mat-option>
+                                    <ngx-mat-select-search (toggleAll)="toggleAll($event)"
+                                        formControlName="groupTxt"
+                                        placeholderLabel="Find bank..."></ngx-mat-select-search>
+                                </mat-option>
+                                @for(group of listDDLGroup; track group.id){
+                                <mat-option [value]="group.value">{{group.label}}</mat-option>
+                                }
+
+                            </mat-select>
+                            @if (form.get('group')?.hasError('required')) {
+                            <mat-error>Group is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-container">
+                    <div class="form-control">
+                        <mat-label>Description<span class="required">*</span></mat-label>
+                        <mat-form-field appearance="outline">
+                            <textarea matInput formControlName="description"></textarea>
+                            @if (form.get('description')?.hasError('required')) {
+                            <mat-error>Description is required</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

@@ -17,6 +17,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoadingService } from '@services/loading/loading.service';
 import { Employee } from '@interfaces/Employee.interface';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DetailEmployeeComponent } from '../modals/detail-employee/detail-employee.component';
 
 @Component({
   selector: 'app-find',
@@ -31,7 +33,9 @@ import { Router } from '@angular/router';
     FormatCurrencyPipe,
     PaginatorComponent,
     MatSortModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [
     EmployeeService,
@@ -63,7 +67,8 @@ export class FindComponent implements OnInit {
     private employeeService: EmployeeService,
     private utils: UtilsService,
     private loading: LoadingService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -160,5 +165,15 @@ export class FindComponent implements OnInit {
 
   onAddEmployee() {
     this.router.navigate(['master', 'employee', 'form-employee'])
+  }
+
+  onView(row: any) {
+    console.log('ROW', row)
+    const dialogRef = this.dialog.open(DetailEmployeeComponent, {
+      data: row
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
